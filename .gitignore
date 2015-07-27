@@ -1,0 +1,7 @@
+node_modules
+bower_components
+src/config/local*.yml
+
+.DS_Store
+/.idea
+/.sass-cache

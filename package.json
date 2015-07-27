@@ -1,0 +1,35 @@
+{
+  "name": "hotrod-jobs",
+  "version": "0.1.0",
+  "description": "Library to create and run simple jobs",
+  "main": "lib/index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "hotrod-logger": "^0.1.2",
+    "promise": "^7.0.3"
+  },
+  "devDependencies": {
+    "chai": "^3.2.0",
+    "mocha": "^2.2.5"
+  },
+  "scripts": {
+    "test": "mocha 'tests/**/*.js'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/panoptix-za/hotrod-jobs.git"
+  },
+  "keywords": [
+    "jobs",
+    "job",
+    "hotrod"
+  ],
+  "author": "emertechie@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/panoptix-za/hotrod-jobs/issues"
+  },
+  "homepage": "https://github.com/panoptix-za/hotrod-jobs#readme"
+}
