@@ -19,8 +19,9 @@ describe('Creating & Running Jobs', function() {
                 resolve('good job');
             });
             jobs.runOnce(job).then(function(result) {
-                assert.equal(result, 'good job');
-                done();
+                tryAssert(function() {
+                    assert.equal(result, 'good job');
+                }, done);
             });
         });
 
@@ -31,8 +32,23 @@ describe('Creating & Running Jobs', function() {
             jobs.runOnce(job).then(function(result) {
                 done('should not be called');
             }, function(err) {
-                assert.equal(err, 'blerf');
-                done();
+                tryAssert(function() {
+                    assert.equal(err, 'blerf');
+                }, done);
+            });
+        });
+
+        it('can run job which throws', function(done) {
+            var job = jobs.create('MyJob', function(resolve, reject, logger) {
+                // Note: prefer to use reject rather than throw
+                throw new Error('blerf');
+            });
+            jobs.runOnce(job).then(function(result) {
+                done('should not be called');
+            }, function(err) {
+                tryAssert(function() {
+                    assert.equal(err.message, 'blerf');
+                }, done);
             });
         });
     });
@@ -76,3 +92,12 @@ describe('Creating & Running Jobs', function() {
         });
     });
 });
+
+function tryAssert(assertFn, done) {
+    try {
+        assertFn();
+        done();
+    } catch (e) {
+        done(e);
+    }
+}
