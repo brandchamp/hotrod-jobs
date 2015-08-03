@@ -1,6 +1,6 @@
 {
   "name": "hotrod-jobs",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Library to create and run simple jobs",
   "main": "lib/index.js",
   "directories": {
