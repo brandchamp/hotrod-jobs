@@ -107,10 +107,6 @@ describe('Creating & Running Jobs', function() {
             };
 
             var job = jobs.create('MyJob', function(resolve) {
-                // Note: stop event only fires if force-stopped. See test below
-                this.on('stop', function() {
-                    done('Error - force stop should not be called');
-                });
                 resolve();
                 onJobComplete();
             });
