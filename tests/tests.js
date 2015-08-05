@@ -55,15 +55,33 @@ describe('Creating & Running Jobs', function() {
 
     describe('Run Continuous Jobs', function() {
 
-        it('can run successful job multiple times', function(done) {
+        it('can run job multiple times and then stop', function(done) {
             var runCount = 0;
             var stopFn;
-            var job = jobs.create('MyJob', function(resolve) {
-                resolve('good job');
-                if (++runCount === 3) {
+            var MAX_RUNS = 3;
+
+            var onJobComplete = function() {
+                ++runCount;
+
+                if (runCount === MAX_RUNS) {
                     stopFn();
-                    done();
+
+                    // Wait a little bit to make sure it really has stopped
+                    setTimeout(function() {
+                        tryAssert(function() {
+                            assert.equal(runCount, MAX_RUNS, 'No more job runs');
+                        }, done);
+                    }, 300);
                 }
+            };
+
+            var job = jobs.create('MyJob', function(resolve) {
+                // Note: stop event only fires if force-stopped. See test below
+                this.on('stop', function() {
+                    done('Error - force stop should not be called');
+                });
+                resolve();
+                onJobComplete();
             });
 
             var intervalInSecs = 0.01;
