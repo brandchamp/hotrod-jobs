@@ -2,6 +2,7 @@ var chai = require('chai');
 var assert = chai.assert;
 
 var jobs = require('../lib/index');
+var ForceStopError = require('../lib/forceStopError');
 
 describe('Creating & Running Jobs', function() {
 
@@ -71,6 +72,7 @@ describe('Creating & Running Jobs', function() {
             }, function(err) {
                 tryAssert(function() {
                     assert.isTrue(jobStopped, 'jobStopped');
+                    assert.isTrue(err instanceof ForceStopError, 'ForceStopError');
                     assert.equal(err.message, 'force-stopped');
                 }, done, done);
             });
